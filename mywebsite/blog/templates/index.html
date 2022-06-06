@@ -1,0 +1,91 @@
+{% extends "base_generic.html" %}
+{% block content %} <!-- 컨텐츠 블럭-->
+{% load static %}
+        <!-- Home Content -->
+        <!-- 작성한 글 가져오기 위해선 3가지 알아야한다 -->
+        <!-- 1. 데이터 베이스에서 작성한 글 가져오기(6개)-->
+        <!-- 2. 첫번째 글과 나머지글의 구성이 다름-->
+        <!-- 3. 첫번째 글에서 300자까지만 미리보기로 보여짐-->
+        
+        <div id="content" class="site-content">
+            <div id="blog-wrapper">
+                <div class="blog-holder center-relative">
+                    {% for post in post_latest %} <!-- post란 이름으로 처리-->
+                        {% if forloop.first %} <!-- 첫번째 항목에 대해-->
+                        <article id="post-1" class="blog-item-holder featured-post">
+                            <div class="entry-content relative">
+                                <div class="content-1170 center-relative">
+                                    <div class="cat-links">
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <!-- 일상,정보 -->
+                                                    {% for c in post.category.all %} <!-- 전부 가져와서 c라는 이름으로 접근 -->
+                                                        {{ c }}
+                                                        {% if not forloop.last %} <!-- 마지막 항목이 아닌 경우에는 -->
+                                                            ,
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="entry-date published">{{ post.createDate }}</div> <!-- 글 작성 -->
+                                    <h2 class="entry-title">
+                                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> <!-- 글 제목 -->
+                                    </h2>
+                                    <div class="excerpt">
+                                        {% if post.is_content_more300 %}
+                                            {{ post.get_content_under300 }}
+                                        {% else %}
+                                            {{ post.content }}
+                                        {% endif %}
+                                        <a class="read-more" href="{{ post.get_absolute_url }}"></a>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </article>
+                        {% else %}
+                        <article id="post-{{ forloop.counter }}" class="blog-item-holder"> <!-- 순서 -->
+                            <div class="entry-content relative">
+                                <div class="content-1170 center-relative">
+                                    <h2 class="entry-title">
+                                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> <!-- 제목 -->
+                                    </h2>
+                                    <div class="cat-links">
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <!-- 일상, 정보 -->
+                                                    {% for c in post.category.all %} <!-- 전부 가져와서 c라는 이름으로 접근 -->
+                                                    {{ c }}
+                                                    {% if not forloop.last %} <!-- 마지막 항목이 아닌 경우에는 -->
+                                                        ,
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="entry-date published">{{ post.createDate }}</div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </article>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+                <div class="clear"></div>
+                <div class="block load-more-holder">LOAD MORE ENTRIES</div>
+            </div>
+
+            <div class="featured-image-holder">
+                <div class="featured-post-image" style="background-image: url({% static 'demo-images/featured-image.jpg' %})"></div>
+
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+{% endblock %}

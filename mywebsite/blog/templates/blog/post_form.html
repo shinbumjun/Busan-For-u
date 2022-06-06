@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+{% block content %} <!-- 컨텐츠 블럭-->
+{% load static %}
+
+        <!-- Single Content -->
+        <div id="content" class="site-content center-relative">
+            <div class="single-post-wrapper content-1070 center-relative">
+
+                <article class="center-relative">
+                    <h2> 새 글 작성하기 </h2>
+                    {% load widget_tweaks %} <!-- 이것을 이용하겠다 -->
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form.visible_fields %} <!-- views.py에서 4개의 필드-->
+
+                        <div class="form-group">
+                            <label for={{field.id_for_label}}>{{fieid.label}}</label>
+                            {{field|add_class:'form-control'}}
+                            {% for error in field.errors %}
+                            <span class="help-block">{{error}}</span>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+
+                        <input type="submit" value="작성 완료">
+                    </form>
+                    <div class="clear"></div>
+                </article>
+            </div>
+        </div>
+
+{% endblock %}

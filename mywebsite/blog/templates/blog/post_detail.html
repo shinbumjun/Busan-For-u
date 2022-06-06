@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+{% block content %} <!-- 컨텐츠 블럭-->
+{% load static %}
+        <!-- Single Content -->
+        <div id="content" class="site-content center-relative">
+            <div class="single-post-wrapper content-1070 center-relative">
+
+                <article class="center-relative">
+                    <h1 class="entry-title">
+                        {{ post.title }}
+                    </h1>
+                    <div class="post-info content-660 center-relative">
+                        <div class="cat-links">
+                            <ul>
+                                <li><a href="#">
+                                    <!-- 일상, 정보 -->
+                                    {% for c in post.category.all %} <!-- 전부 가져와서 c라는 이름으로 접근 -->
+                                    {{ c }}
+                                    {% if not forloop.last %} <!-- 마지막 항목이 아닌 경우에는 -->
+                                        ,
+                                    {% endif %}
+                                    {% endfor %}
+                                </a></li>
+                            </ul>
+                        </div>
+                        <div class="entry-date published">{{ post.createDate }}</div> <!-- 작성일 -->
+                        <div class="clear"></div>
+                    </div>
+
+                    {% if post.title_image %} <!-- 이미지가 주어진다면 -->
+                    <div class="post-full-width">
+                        <img src="{{ post.title_image.url }}" alt="">
+                    {% endif %}
+
+                    <div class="entry-content">
+                        <div class="content-wrap content-660 center-relative">
+                            {{ post.content }}
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </article>
+            </div>
+        </div>
+
+{% endblock %}
