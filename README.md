@@ -2,6 +2,15 @@
 ### django 프로젝트
 홈, 로그인, 글 작성(로그인해야 작성 가능)
 
+- pip install virtualenv -> 파이썬 가상환경 설치
+- virtualenv myvenv -> 이름
+- myvenv\scripts\activate -> 가상환경 활성화
+- pip install django
+- django-admin startproject mywebsite -> 프로젝트
+- cd mywebsite
+- python manage.py startapp blog -> 앱
+- code . -> 실행
+
 - pip install Pillow -> 이미지 설치
 - python manage.py makemigrations -> 모델 생성
 - python manage.py migrate -> 설계도를 통해서 DB에 적용
